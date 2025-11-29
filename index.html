@@ -111,7 +111,7 @@
     const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
     function getRatingClass(rating) {
-        if (!rating || rating === "无") return "";
+        if (!rating || rating === "None") return "";
         const r = parseInt(rating);
         if (isNaN(r)) return "";
         if (r < 1200) return "user-gray";
@@ -171,7 +171,7 @@
 
                 const countAfter = afterContests.length;
                 const latestRating = contests[contests.length - 1].newRating;
-                const ratingOnDeadline = beforeContests.length > 0 ? beforeContests[beforeContests.length - 1].newRating : "无";
+                const ratingOnDeadline = beforeContests.length > 0 ? beforeContests[beforeContests.length - 1].newRating : "None";
 
                 return {
                     ...user,
