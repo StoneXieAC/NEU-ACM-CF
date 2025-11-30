@@ -1,119 +1,211 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NEU ACM CF 实时统计</title>
     <style>
-        body {
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
-            padding: 20px;
-        }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background-color: #f8f9fa;
+        color: #333;
+        margin: 0;
+        padding: 15px;
+      }
 
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 20px 15px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+      }
 
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
+      h1 {
+        text-align: center;
+        color: #2c3e50;
+        margin: 0 0 20px 0;
+        font-size: 1.5rem;
+      }
 
-        .status-bar {
-            background: #e9ecef;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: bold;
-            color: #555;
-        }
+      .control-panel {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        margin-bottom: 15px;
+        justify-content: center;
+      }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+      .control-panel input[type="datetime-local"],
+      .control-panel button {
+        width: auto;
+        min-width: 140px;
+        max-width: 250px;
+        height: 38px;
+        padding: 0 10px;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        box-sizing: border-box;
+      }
 
-        th, td {
-            padding: 12px;
-            text-align: center;
-            border-bottom: 1px solid #dee2e6;
-        }
+      .control-panel input[type="datetime-local"] {
+        border: 1px solid #ced4da;
+        font-family: inherit;
+        color: #495057;
+        flex: 2;
+      }
 
-        th {
-            background-color: #343a40;
-            color: #fff;
-            font-weight: 600;
-        }
+      .control-panel button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 2;
+      }
 
-        tr:hover {
-            background-color: #f1f1f1;
-        }
+      .control-panel button:active {
+        background-color: #0056b3;
+      }
 
-        a {
-            color: #007bff;
-            text-decoration: none;
-            font-weight: 600;
-        }
+      .status-bar {
+        background: #e9ecef;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: 500;
+        color: #555;
+        font-size: 0.9rem;
+      }
 
-        a:hover { text-decoration: underline; }
+      .table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
 
-        .user-gray { color: gray; font-weight: bold; }
-        .user-green { color: green; font-weight: bold; }
-        .user-cyan { color: #03a89e; font-weight: bold; }
-        .user-blue { color: blue; font-weight: bold; }
-        .user-violet { color: #a0a; font-weight: bold; }
-        .user-orange { color: #ff8c00; font-weight: bold; }
-        .user-red { color: red; font-weight: bold; }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 350px;
+      }
+
+      th,
+      td {
+        padding: 12px 8px;
+        text-align: center;
+        border-bottom: 1px solid #dee2e6;
+        white-space: nowrap;
+        font-size: 0.95rem;
+      }
+
+      th {
+        background-color: #343a40;
+        color: #fff;
+        font-weight: 600;
+      }
+
+      tr:hover {
+        background-color: #f8f9fa;
+      }
+
+      a {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .user-black {
+        color: black;
+        font-weight: normal;
+      }
+      .user-gray {
+        color: gray;
+        font-weight: bold;
+      }
+      .user-green {
+        color: green;
+        font-weight: bold;
+      }
+      .user-cyan {
+        color: #03a89e;
+        font-weight: bold;
+      }
+      .user-blue {
+        color: blue;
+        font-weight: bold;
+      }
+      .user-violet {
+        color: #a0a;
+        font-weight: bold;
+      }
+      .user-orange {
+        color: #ff8c00;
+        font-weight: bold;
+      }
+      .user-red {
+        color: red;
+        font-weight: bold;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <div class="container">
+      <h1>NEU ACM CF 训练统计</h1>
 
-<div class="container">
-    <h1>NEU ACM CF 训练统计</h1>
+      <div class="control-panel">
+        <input type="datetime-local" id="startTime" value="2025-09-01T23:59" />
+        <button id="runBtn" onclick="initiateProcess()">开始 / 刷新</button>
+      </div>
 
-    <div id="status" class="status-bar">
-        准备就绪，正在读取 handle.csv ...
+      <div id="status" class="status-bar">点击上方按钮开始统计</div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>姓名</th>
+              <th>Handle</th>
+              <th>Rating</th>
+              <th>统计场次</th>
+            </tr>
+          </thead>
+          <tbody id="resultBody"></tbody>
+        </table>
+      </div>
     </div>
 
-    <table>
-        <thead>
-        <tr>
-            <th>序号</th>
-            <th>姓名</th>
-            <th>Handle</th>
-            <th>总场次</th>
-            <th>统计后场次</th>
-            <th>当前 Rating</th>
-            <th>截止前 Rating</th>
-        </tr>
-        </thead>
-        <tbody id="resultBody">
-        </tbody>
-    </table>
-</div>
+    <script>
+      const STATUS_DIV = document.getElementById("status");
+      const TABLE_BODY = document.getElementById("resultBody");
+      const RUN_BTN = document.getElementById("runBtn");
+      const TIME_INPUT = document.getElementById("startTime");
 
-<script>
-    const DEADLINE_DATE = new Date("2025-09-01T23:59:59");
-    const DEADLINE_TIMESTAMP = Math.floor(DEADLINE_DATE.getTime() / 1000);
+      let currentRunId = 0;
 
-    const STATUS_DIV = document.getElementById("status");
-    const TABLE_BODY = document.getElementById("resultBody");
+      const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
-    function getRatingClass(rating) {
+      function getRatingClass(rating, totalContests) {
         if (!rating || rating === "None") return "";
+
+        if (totalContests !== undefined && totalContests <= 5) {
+          return "user-black";
+        }
+
         const r = parseInt(rating);
         if (isNaN(r)) return "";
+
         if (r < 1200) return "user-gray";
         if (r < 1400) return "user-green";
         if (r < 1600) return "user-cyan";
@@ -121,130 +213,144 @@
         if (r < 2100) return "user-violet";
         if (r < 2400) return "user-orange";
         return "user-red";
-    }
+      }
 
-    async function loadHandleCSV() {
+      async function loadHandleCSV() {
         try {
-            const response = await fetch("handle.csv");
-            if (!response.ok) throw new Error("无法读取 handle.csv");
+          const response = await fetch("handle.csv");
+          if (!response.ok) throw new Error("无法读取 handle.csv");
 
-            const text = await response.text();
+          const text = await response.text();
+          const lines = text.trim().split("\n");
+          const users = [];
 
-            const lines = text.trim().split("\n");
-            const users = [];
-
-            for (let i = 1; i < lines.length; i++) {
-                const row = lines[i].split(",");
-                if (row.length >= 2) {
-                    users.push({
-                        name: row[0].trim(),
-                        handle: row[1].trim()
-                    });
-                }
+          for (let i = 1; i < lines.length; i++) {
+            const row = lines[i].split(",");
+            if (row.length >= 2) {
+              users.push({
+                name: row[0].trim(),
+                handle: row[1].trim(),
+              });
             }
-            return users;
-
+          }
+          return users;
         } catch (err) {
-            STATUS_DIV.innerHTML = `<span style="color:red">错误：${err.message} <br> 请确保使用 http 服务器运行 (如 python -m http.server)</span>`;
-            return [];
+          STATUS_DIV.innerHTML = `<span style="color:red">错误：${err.message} <br> 请确保使用 http 服务器运行</span>`;
+          return [];
         }
-    }
+      }
 
-    async function fetchUserData(user) {
+      async function fetchUserData(user, deadlineTimestamp) {
         const url = `https://codeforces.com/api/user.rating?handle=${user.handle}`;
 
         try {
-            const response = await fetch(url);
-            const data = await response.json();
+          const response = await fetch(url);
+          const data = await response.json();
 
-            if (data.status === "OK") {
-                const contests = data.result;
+          if (data.status === "OK") {
+            const contests = data.result;
+            const totalContests = contests.length;
 
-                const totalContests = contests.length;
-
-                if (totalContests === 0) {
-                    return { ...user, total: 0, after: 0, cur: null, before: null, error: "无比赛数据" };
-                }
-
-                const afterContests = contests.filter(c => c.ratingUpdateTimeSeconds > DEADLINE_TIMESTAMP);
-                const beforeContests = contests.filter(c => c.ratingUpdateTimeSeconds <= DEADLINE_TIMESTAMP);
-
-                const countAfter = afterContests.length;
-                const latestRating = contests[contests.length - 1].newRating;
-                const ratingOnDeadline = beforeContests.length > 0 ? beforeContests[beforeContests.length - 1].newRating : "None";
-
-                return {
-                    ...user,
-                    total: totalContests,
-                    after: countAfter,
-                    cur: latestRating,
-                    before: ratingOnDeadline,
-                    error: null
-                };
-            } else {
-                return { ...user, error: data.comment || "API 错误" };
+            if (totalContests === 0) {
+              return {
+                ...user,
+                total: 0,
+                after: 0,
+                cur: null,
+                error: "无数据",
+              };
             }
-        } catch (err) {
-            console.error(err);
-            return { ...user, error: "网络/跨域错误 (请开启CORS插件)" };
-        }
-    }
 
-    function renderRow(data, index) {
+            const afterContests = contests.filter(
+              (c) => c.ratingUpdateTimeSeconds > deadlineTimestamp
+            );
+
+            const countAfter = afterContests.length;
+            const latestRating = contests[contests.length - 1].newRating;
+
+            return {
+              ...user,
+              total: totalContests,
+              after: countAfter,
+              cur: latestRating,
+              error: null,
+            };
+          } else {
+            return { ...user, error: data.comment || "API 错误" };
+          }
+        } catch (err) {
+          console.error(err);
+          return { ...user, error: "网络/跨域错误" };
+        }
+      }
+
+      function renderRow(data) {
         const tr = document.createElement("tr");
 
         if (data.error) {
-            tr.innerHTML = `
-                <td>${index}</td>
+          tr.innerHTML = `
                 <td>${data.name}</td>
                 <td>
                     <a href="https://codeforces.com/profile/${data.handle}" target="_blank">${data.handle}</a>
                 </td>
-                <td colspan="4" style="color: red;">${data.error}</td>
+                <td colspan="2" style="color: red;">${data.error}</td>
             `;
         } else {
-            tr.innerHTML = `
-                <td>${index}</td>
+          const curClass = getRatingClass(data.cur, data.total);
+
+          tr.innerHTML = `
                 <td>${data.name}</td>
                 <td>
-                    <a href="https://codeforces.com/profile/${data.handle}" target="_blank" class="${getRatingClass(data.cur)}">${data.handle}</a>
+                    <a href="https://codeforces.com/profile/${data.handle}" target="_blank" class="${curClass}">${data.handle}</a>
                 </td>
-                <td>${data.total}</td>
+                <td class="${curClass}">${data.cur}</td>
                 <td><strong>${data.after}</strong></td>
-                <td class="${getRatingClass(data.cur)}">${data.cur}</td>
-                <td class="${getRatingClass(data.before)}">${data.before}</td>
             `;
         }
         TABLE_BODY.appendChild(tr);
-    }
+      }
 
-    async function startProcess() {
+      async function initiateProcess() {
+        currentRunId++;
+        const thisRunId = currentRunId;
+
+        TABLE_BODY.innerHTML = "";
+
+        const timeVal = TIME_INPUT.value;
+        const deadlineDate = new Date(timeVal);
+        const deadlineTimestamp = Math.floor(deadlineDate.getTime() / 1000);
+
         const users = await loadHandleCSV();
         if (users.length === 0) return;
 
-        STATUS_DIV.textContent = `读取成功，共 ${users.length} 人，开始从 Codeforces 获取数据...`;
+        STATUS_DIV.textContent = `读取成功，共 ${users.length} 人，开始获取数据...`;
+        STATUS_DIV.style.backgroundColor = "#e9ecef";
+        STATUS_DIV.style.color = "#555";
 
         for (let i = 0; i < users.length; i++) {
-            const user = users[i];
+          if (thisRunId !== currentRunId) return;
 
-            STATUS_DIV.textContent = `正在查询 (${i + 1}/${users.length}): ${user.name} - ${user.handle}`;
+          const user = users[i];
+          STATUS_DIV.textContent = `正在查询 (${i + 1}/${users.length}): ${
+            user.name
+          }`;
 
-            const result = await fetchUserData(user);
-            renderRow(result, i + 1);
+          const result = await fetchUserData(user, deadlineTimestamp);
 
-            window.scrollTo(0, document.body.scrollHeight);
+          if (thisRunId !== currentRunId) return;
+          renderRow(result);
 
-            await sleep(300);
+          await sleep(50);
         }
 
-        STATUS_DIV.textContent = "所有数据统计完成！";
-        STATUS_DIV.style.backgroundColor = "#d4edda";
-        STATUS_DIV.style.color = "#155724";
-    }
+        if (thisRunId === currentRunId) {
+          STATUS_DIV.textContent = "统计完成";
+          STATUS_DIV.style.backgroundColor = "#d4edda";
+          STATUS_DIV.style.color = "#155724";
+        }
+      }
 
-    startProcess();
-
-</script>
-
-</body>
+      initiateProcess();
+    </script>
+  </body>
 </html>
