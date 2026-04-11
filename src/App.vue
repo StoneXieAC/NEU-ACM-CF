@@ -19,7 +19,7 @@ const defaultDate = '2026-03-01'
 const CONCURRENCY_LIMIT = 4
 const RATE_LIMIT_MAX_RETRIES = 4
 const RATE_LIMIT_RETRY_BASE_MS = 3000
-const handleCsvUrl = new URL('handle.csv', import.meta.env.BASE_URL).toString()
+const handleCsvUrl = `${import.meta.env.BASE_URL}handle.csv`
 
 const selectedDate = ref(defaultDate)
 const rows = ref<UserStats[]>([])
