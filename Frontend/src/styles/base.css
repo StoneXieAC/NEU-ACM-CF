@@ -1,0 +1,29 @@
+:root {
+  font-family: 'Avenir Next', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #10233f;
+  background: radial-gradient(circle at top left, rgba(117,203,255,.32), transparent 30%), radial-gradient(circle at top right, rgba(255,184,107,.28), transparent 24%), linear-gradient(180deg,#f4f8ff 0%,#eef4f7 45%,#e9eef4 100%);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --surface-border: rgba(133,156,186,.18);
+  --surface-background: rgba(255,255,255,.78);
+  --surface-shadow: 0 20px 60px rgba(31,55,89,.08);
+}
+* { box-sizing: border-box; }
+html, body, #app { min-height: 100%; }
+body { margin: 0; }
+a { text-decoration: none; }
+button, input { font: inherit; }
+.page-shell { width: min(1180px,calc(100vw - 32px)); margin: 0 auto; padding: 40px 0 64px; }
+.rating-none, .rating-newbie { color: #2a2f35; }
+.rating-gray { color: #81868c; font-weight: 700; }
+.rating-green { color: #1f9d5d; font-weight: 700; }
+.rating-cyan { color: #00a9a2; font-weight: 700; }
+.rating-blue { color: #245cff; font-weight: 700; }
+.rating-violet { color: #9325ff; font-weight: 700; }
+.rating-orange { color: #f08a00; font-weight: 700; }
+.rating-red { color: #eb3b30; font-weight: 700; }
+@media (max-width: 960px) { .page-shell { width: min(100vw - 20px,1180px); padding: 20px 0 44px; } }
