@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { StatsRow } from '../types/stats'
 import { getRatingClass } from '../utils/rating'
-defineProps<{ rows: StatsRow[]; isLoading: boolean }>()
+defineProps<{ rows: StatsRow[]; isLoading: boolean; emptyMessage?: string | null }>()
 </script>
 
 <template>
@@ -11,7 +11,7 @@ defineProps<{ rows: StatsRow[]; isLoading: boolean }>()
       <table>
         <thead><tr><th>排名</th><th>姓名</th><th>Handle</th><th>Rating</th><th>统计场次</th><th>总参赛数</th></tr></thead>
         <tbody>
-          <tr v-if="rows.length === 0"><td colspan="6" class="empty-row">{{ isLoading ? '正在读取服务器缓存…' : '暂无可用统计数据。' }}</td></tr>
+          <tr v-if="rows.length === 0"><td colspan="6" class="empty-row">{{ isLoading ? '正在读取统计数据…' : (emptyMessage ?? '暂无可用统计数据。') }}</td></tr>
           <tr v-for="(row,index) in rows" :key="`${row.name}-${row.handle}`" :class="{ 'row-stale': row.freshness === 'stale' }">
             <td>{{ index + 1 }}</td>
             <td>{{ row.name }}</td>

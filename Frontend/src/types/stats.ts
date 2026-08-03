@@ -1,5 +1,4 @@
 export type DataFreshness = 'fresh' | 'stale' | 'unavailable'
-export type StatusTone = 'neutral' | 'loading' | 'success' | 'warning' | 'error'
 
 export interface StatsRow {
   name: string
