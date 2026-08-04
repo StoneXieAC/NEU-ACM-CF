@@ -1,5 +1,25 @@
 import { describe, expect, it } from 'vitest'
-import { getRatingClass } from './rating'
+import { getRatingClass, getRatingTierClass } from './rating'
+
+describe('getRatingTierClass', () => {
+  it.each([
+    [null, 'rating-none'],
+    [1199, 'rating-gray'],
+    [1200, 'rating-green'],
+    [1399, 'rating-green'],
+    [1400, 'rating-cyan'],
+    [1599, 'rating-cyan'],
+    [1600, 'rating-blue'],
+    [1899, 'rating-blue'],
+    [1900, 'rating-violet'],
+    [2099, 'rating-violet'],
+    [2100, 'rating-orange'],
+    [2399, 'rating-orange'],
+    [2400, 'rating-red'],
+  ])('maps %s to %s', (rating, expectedClass) => {
+    expect(getRatingTierClass(rating)).toBe(expectedClass)
+  })
+})
 
 describe('getRatingClass', () => {
   it('keeps new competitors visually neutral', () => {
